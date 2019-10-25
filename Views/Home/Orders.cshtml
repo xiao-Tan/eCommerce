@@ -1,0 +1,68 @@
+@model Order
+
+@{
+    ViewData["Title"] = "Order Page";
+}
+
+<br>
+<h2>
+    <a href="/" class="link">Dashboard</a>
+    | <a href="/products" class="link">Products</a>
+    | Orders
+    | <a href="/customers" class="link">Customers</a>
+</h2>
+
+<hr>
+<h4>Add a new order</h4>
+<form action="/addorder" method="post">
+    <div class="form-group">
+        <select class="form-control" asp-for="CustomerId">
+            @foreach(var v in @ViewBag.AllCustomers)
+            {                       
+                <option value="@v.CustomerId">@v.CustomerName</option>                     
+            }             
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Orderquantity">Order Quantity:</label>
+        <input asp-for="Orderquantity" class="form-control" placeholder="1">
+        <span asp-validation-for="Orderquantity"></span>
+    </div>
+    <div class="form-group">
+        <select class="form-control" asp-for="ProductId">
+            @foreach(var v in @ViewBag.AllProducts)
+            {                       
+                <option value="@v.ProductId">@v.ProductName</option>                     
+            }             
+        </select>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary text-right" type="submit" value="Order">  
+    </div>
+</form>
+
+<br>
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Order Id</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var v in @ViewBag.AllOrders)
+        {
+            <tr>
+            <th scope="row">@v.OrderId</th>
+            <td>@v.Customer.CustomerName</td>
+            <td>@v.Product.ProductName</td>
+            <td>@v.Orderquantity</td>
+            <td>@v.CreatedAt.ToString("MMM dd yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

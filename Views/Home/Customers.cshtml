@@ -1,0 +1,47 @@
+@model Customer
+@{
+    ViewData["Title"] = "Customer Page";
+}
+
+<br>
+<h2>
+    <a href="/" class="link">Dashboard</a>
+    | <a href="/products" class="link">Products</a>
+    | <a href="/orders" class="link">Orders</a>
+    | Customers
+</h2>
+<hr>
+
+<form action="/addcustomer" method="post">
+    <div class="form-group">
+        <label asp-for="CustomerName">Add a new customer</label>
+        <input asp-for="CustomerName" class="form-control">
+        <span asp-validation-for="CustomerName"></span>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary text-right" type="submit" value="Add">  
+    </div>
+</form>
+
+<br>
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Customer Id</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Created Date</th>
+        <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var c in @ViewBag.AllCustomers)
+        {
+            <tr>
+            <th scope="row">@c.CustomerId</th>
+            <td>@c.CustomerName</td>
+            <td>@c.CreatedAt.ToString("MMM dd yyyy")</td>
+            <td><a href="/remove/@c.CustomerId" class="link">Remove</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

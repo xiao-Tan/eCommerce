@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<br>
+<h2>
+    Dashboard | <a href="/products" class="link">Products</a>
+    | <a href="/orders" class="link">Orders</a>
+    | <a href="/customers" class="link">Customers</a>
+</h2>
+
+<hr>
+<br>
+<div class="row"> 
+@foreach(var p in @ViewBag.AllProducts)
+{
+    <div class="product_index">
+        <img src="@p.Image" class="img_index">
+        <p>@p.ProductName</p>
+        <p>(@p.InitialQuantity left)</p>
+    </div>
+}
+</div>
+<p class="text-center"><a href="/moreProducts" class="link">Show more...</a></p>
+
+<br>
+<h4>Recent Orders</h4>
+<ul>
+    @foreach(var o in @ViewBag.AllOrders)
+    {
+        <li>@o.Customer.CustomerName purchased @o.Orderquantity @o.Product.ProductName...(@o.TimeDiff)</li>
+    }
+</ul>
+<p class="text-center"><a href="/allOrders" class="link">Show all orders...</a></p>
+
+<br>
+<h4>New Customers</h4>
+<ul>
+    @foreach(var c in @ViewBag.AllCustomers)
+    {
+        <li>@c.CustomerName joined the store. (@c.TimeDiff)</li>
+    }
+</ul>
+<p class="text-center"><a href="/allCustomers" class="link">Show all customers...</a></p>
+
+
